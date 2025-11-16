@@ -1,6 +1,7 @@
 'use client';
 
 import { AnatomicalPart } from '@/lib/models/AnatomicalPart';
+import { getDiagramLabel } from '@/lib/utils/diagramMetadata';
 import { useEffect, useRef, useState } from 'react';
 
 interface BodyDiagramSVGProps {
@@ -25,8 +26,11 @@ export default function BodyDiagramSVG({
 
   // Use the svgFile from highlightedPart if available, otherwise use default
   const actualSvgFile = highlightedPart?.svgFile || svgFile || '/anatomical-images/Human_skeleton_front_-_no_labels.svg';
+  const diagramLabel = getDiagramLabel(actualSvgFile);
 
   useEffect(() => {
+    setSvgDoc(null);
+
     const loadSvg = () => {
       if (objectRef.current?.contentDocument) {
         setSvgDoc(objectRef.current.contentDocument);
@@ -108,6 +112,7 @@ export default function BodyDiagramSVG({
   return (
     <div className="w-full max-w-2xl mx-auto">
       <object
+        key={actualSvgFile}
         ref={objectRef}
         data={actualSvgFile}
         type="image/svg+xml"
@@ -161,6 +166,9 @@ export default function BodyDiagramSVG({
           </span>
         </div>
       )}
+      <div className="mt-2 text-center text-xs text-gray-500">
+        Diagram: {diagramLabel}
+      </div>
     </div>
   );
 }

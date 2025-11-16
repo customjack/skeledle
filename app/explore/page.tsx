@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { AnatomyDatabase } from '@/lib/services/AnatomyDatabase';
 import { AnatomicalPart } from '@/lib/models/AnatomicalPart';
+import { getDiagramLabel } from '@/lib/utils/diagramMetadata';
 import Link from 'next/link';
+
+const DEFAULT_DIAGRAM = '/anatomical-images/Human_skeleton_front_-_no_labels.svg';
 
 export default function ExplorePage() {
   const [database] = useState(() => AnatomyDatabase.getInstance());
@@ -11,13 +14,56 @@ export default function ExplorePage() {
   const [hoveredPart, setHoveredPart] = useState<AnatomicalPart | null>(null);
   const [clickedPart, setClickedPart] = useState<AnatomicalPart | null>(null);
   const [svgDoc, setSvgDoc] = useState<Document | null>(null);
+  const [selectedDiagram, setSelectedDiagram] = useState<string | null>(null);
   const objectRef = useRef<HTMLObjectElement>(null);
+
+  const diagramOptions = useMemo(() => {
+    const unique: { file: string; label: string; count: number }[] = [];
+    const indexMap = new Map<string, number>();
+
+    allParts.forEach(part => {
+      const file = part.svgFile || DEFAULT_DIAGRAM;
+      const existingIndex = indexMap.get(file);
+
+      if (existingIndex === undefined) {
+        indexMap.set(file, unique.length);
+        unique.push({
+          file,
+          label: getDiagramLabel(file),
+          count: 1,
+        });
+      } else {
+        unique[existingIndex].count += 1;
+      }
+    });
+
+    return unique;
+  }, [allParts]);
+
+  const currentDiagram = selectedDiagram ?? diagramOptions[0]?.file ?? DEFAULT_DIAGRAM;
+  const currentDiagramLabel = getDiagramLabel(currentDiagram);
+
+  const diagramParts = useMemo(
+    () => allParts.filter(part => part.svgFile === currentDiagram),
+    [allParts, currentDiagram]
+  );
 
   useEffect(() => {
     setAllParts(database.getAllParts());
   }, [database]);
 
   useEffect(() => {
+    if (diagramOptions.length === 0) return;
+    if (!selectedDiagram || !diagramOptions.some(option => option.file === selectedDiagram)) {
+      setSelectedDiagram(diagramOptions[0].file);
+    }
+  }, [diagramOptions, selectedDiagram]);
+
+  useEffect(() => {
+    if (!currentDiagram) return;
+
+    setSvgDoc(null);
+
     const loadSvg = () => {
       if (objectRef.current?.contentDocument) {
         setSvgDoc(objectRef.current.contentDocument);
@@ -35,13 +81,18 @@ export default function ExplorePage() {
         obj.removeEventListener('load', loadSvg);
       }
     };
-  }, []);
+  }, [currentDiagram]);
+
+  useEffect(() => {
+    setHoveredPart(null);
+    setClickedPart(null);
+  }, [currentDiagram]);
 
   // Add hover listeners to SVG elements
   useEffect(() => {
-    if (!svgDoc) return;
+    if (!svgDoc || diagramParts.length === 0) return;
 
-    let hoverTimeout: NodeJS.Timeout;
+    let hoverTimeout: ReturnType<typeof setTimeout>;
     let currentHoveredId: string | null = null;
 
     const handleSvgMouseOver = (e: MouseEvent) => {
@@ -58,7 +109,7 @@ export default function ExplorePage() {
 
         // Debounce the hover state change
         hoverTimeout = setTimeout(() => {
-          const part = allParts.find(p => p.getSvgPaths().includes(elementId));
+          const part = diagramParts.find(p => p.getSvgPaths().includes(elementId));
           if (part && !clickedPart) {
             setHoveredPart(part);
           }
@@ -71,7 +122,7 @@ export default function ExplorePage() {
       const relatedId = relatedTarget?.id || relatedTarget?.parentElement?.id;
 
       // Only clear if we're not moving to another valid element
-      if (!relatedId || !allParts.find(p => p.getSvgPaths().includes(relatedId))) {
+      if (!relatedId || !diagramParts.find(p => p.getSvgPaths().includes(relatedId))) {
         currentHoveredId = null;
         if (hoverTimeout) {
           clearTimeout(hoverTimeout);
@@ -87,9 +138,10 @@ export default function ExplorePage() {
       const elementId = target.id || target.parentElement?.id;
 
       if (elementId) {
-        const part = allParts.find(p => p.getSvgPaths().includes(elementId));
+        const part = diagramParts.find(p => p.getSvgPaths().includes(elementId));
         if (part) {
           setClickedPart(part === clickedPart ? null : part);
+          setHoveredPart(null);
         }
       }
     };
@@ -100,7 +152,7 @@ export default function ExplorePage() {
     svgElement.addEventListener('click', handleSvgClick as EventListener);
 
     // Make SVG elements interactive
-    allParts.forEach(part => {
+    diagramParts.forEach(part => {
       part.getSvgPaths().forEach(svgPath => {
         const element = svgDoc.getElementById(svgPath);
         if (element) {
@@ -113,8 +165,11 @@ export default function ExplorePage() {
       svgElement.removeEventListener('mouseover', handleSvgMouseOver as EventListener);
       svgElement.removeEventListener('mouseout', handleSvgMouseOut as EventListener);
       svgElement.removeEventListener('click', handleSvgClick as EventListener);
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout);
+      }
     };
-  }, [svgDoc, allParts, clickedPart]);
+  }, [svgDoc, diagramParts, clickedPart]);
 
   // Highlight the hovered or clicked part
   useEffect(() => {
@@ -171,12 +226,7 @@ export default function ExplorePage() {
         }
       });
     }
-  }, [svgDoc, hoveredPart, clickedPart]);
-
-  const handlePartHover = (part: AnatomicalPart | null) => {
-    // Don't change hover state from list - only from SVG directly
-    // This prevents flashing when hovering over list items
-  };
+  }, [svgDoc, hoveredPart, clickedPart, currentDiagram]);
 
   const handlePartClick = (part: AnatomicalPart) => {
     setClickedPart(part === clickedPart ? null : part);
@@ -184,7 +234,9 @@ export default function ExplorePage() {
     setHoveredPart(null);
   };
 
-  const displayPart = clickedPart || hoveredPart;
+  const displayPart =
+    (clickedPart && clickedPart.svgFile === currentDiagram ? clickedPart : null) ||
+    (hoveredPart && hoveredPart.svgFile === currentDiagram ? hoveredPart : null);
 
   return (
     <main className="min-h-screen p-8 bg-gray-50">
@@ -193,7 +245,7 @@ export default function ExplorePage() {
           <div>
             <h1 className="text-4xl font-bold text-blue-600 mb-2">Explorer Mode</h1>
             <p className="text-gray-600">
-              Hover over bones to see their names, or click to pin them
+              Hover over bones to see their names, click to pin them, and use the diagram picker to cycle through each asset.
             </p>
           </div>
           <Link
@@ -208,19 +260,44 @@ export default function ExplorePage() {
           {/* SVG Diagram - Takes up 2 columns */}
           <div className="lg:col-span-2">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">
-                Interactive Skeleton
+              <h2 className="text-2xl font-bold mb-2">
+                Interactive Anatomy Viewer
               </h2>
+              <p className="text-sm text-gray-600 mb-4">
+                Current Diagram:{' '}
+                <span className="font-semibold text-gray-900">{currentDiagramLabel}</span>
+              </p>
+              {diagramOptions.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {diagramOptions.map(option => (
+                    <button
+                      key={option.file}
+                      onClick={() => setSelectedDiagram(option.file)}
+                      className={`px-3 py-1 rounded-full border text-sm transition-colors ${
+                        currentDiagram === option.file
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                      }`}
+                    >
+                      {option.label}
+                      <span className="ml-2 text-xs opacity-80">
+                        ({option.count})
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
               <div className="bg-gray-50 rounded-lg p-4">
                 <object
+                  key={currentDiagram}
                   ref={objectRef}
-                  data="/anatomical-images/Human_skeleton_front_-_no_labels.svg"
+                  data={currentDiagram}
                   type="image/svg+xml"
                   className="w-full h-auto"
                   aria-label="Interactive anatomical diagram"
                 >
                   <div className="text-center p-8">
-                    Loading skeleton diagram...
+                    Loading anatomy diagram...
                   </div>
                 </object>
               </div>
@@ -300,22 +377,33 @@ export default function ExplorePage() {
 
             {/* All Parts List */}
             <div className="bg-white p-6 rounded-lg shadow-lg max-h-96 overflow-y-auto">
-              <h2 className="text-xl font-bold mb-4">All Bones ({allParts.length})</h2>
+              <h2 className="text-xl font-bold mb-2">
+                Parts in Diagram ({diagramParts.length})
+              </h2>
+              <p className="text-sm text-gray-600 mb-4">
+                Switch diagrams above to review other annotations.
+              </p>
               <div className="space-y-1">
-                {allParts.map((part) => (
-                  <button
-                    key={part.id}
-                    onClick={() => handlePartClick(part)}
-                    className={`w-full text-left px-3 py-2 rounded transition-colors ${
-                      clickedPart?.id === part.id
-                        ? 'bg-green-100 text-green-800'
-                        : 'hover:bg-gray-100'
-                    }`}
-                  >
-                    <div className="font-medium">{part.name}</div>
-                    <div className="text-xs text-gray-600">{part.commonName}</div>
-                  </button>
-                ))}
+                {diagramParts.length === 0 ? (
+                  <p className="text-sm text-gray-500">
+                    No parts are associated with this diagram yet.
+                  </p>
+                ) : (
+                  diagramParts.map((part) => (
+                    <button
+                      key={part.id}
+                      onClick={() => handlePartClick(part)}
+                      className={`w-full text-left px-3 py-2 rounded transition-colors ${
+                        clickedPart?.id === part.id
+                          ? 'bg-green-100 text-green-800'
+                          : 'hover:bg-gray-100'
+                      }`}
+                    >
+                      <div className="font-medium">{part.name}</div>
+                      <div className="text-xs text-gray-600">{part.commonName}</div>
+                    </button>
+                  ))
+                )}
               </div>
             </div>
           </div>
