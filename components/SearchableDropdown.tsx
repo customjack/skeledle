@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { AnatomicalPart } from '@/lib/models/AnatomicalPart';
+import { filterAnatomicalParts } from '@/lib/utils/anatomySearch';
 
 interface SearchableDropdownProps {
   parts: AnatomicalPart[];
@@ -22,16 +23,9 @@ export default function SearchableDropdown({
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const trimmedQuery = query.trim().toLowerCase();
+  const trimmedQuery = query.trim();
   const meetsLengthRequirement = trimmedQuery.length >= 2;
-
-  const filteredParts = meetsLengthRequirement
-    ? parts.filter(part => {
-        const nameMatch = part.name.toLowerCase().startsWith(trimmedQuery);
-        const commonMatch = part.commonName.toLowerCase().startsWith(trimmedQuery);
-        return nameMatch || commonMatch;
-      })
-    : [];
+  const filteredParts = filterAnatomicalParts(parts, query);
 
   const handleSelect = (part: AnatomicalPart) => {
     onSelect(part);
