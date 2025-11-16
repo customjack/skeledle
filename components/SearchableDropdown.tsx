@@ -22,13 +22,16 @@ export default function SearchableDropdown({
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const filteredParts = query
-    ? parts.filter(part =>
-        part.name.toLowerCase().includes(query.toLowerCase()) ||
-        part.commonName.toLowerCase().includes(query.toLowerCase()) ||
-        part.aliases.some(alias => alias.toLowerCase().includes(query.toLowerCase()))
-      )
-    : parts;
+  const trimmedQuery = query.trim().toLowerCase();
+  const meetsLengthRequirement = trimmedQuery.length >= 2;
+
+  const filteredParts = meetsLengthRequirement
+    ? parts.filter(part => {
+        const nameMatch = part.name.toLowerCase().startsWith(trimmedQuery);
+        const commonMatch = part.commonName.toLowerCase().startsWith(trimmedQuery);
+        return nameMatch || commonMatch;
+      })
+    : [];
 
   const handleSelect = (part: AnatomicalPart) => {
     onSelect(part);
@@ -38,8 +41,10 @@ export default function SearchableDropdown({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen && e.key !== 'Enter') {
-      setIsOpen(true);
+    if (!shouldShowDropdown) {
+      if (e.key !== 'Enter' && meetsLengthRequirement) {
+        setIsOpen(true);
+      }
       return;
     }
 
@@ -79,6 +84,14 @@ export default function SearchableDropdown({
     setSelectedIndex(0);
   }, [query]);
 
+  useEffect(() => {
+    if (!meetsLengthRequirement) {
+      setIsOpen(false);
+    }
+  }, [meetsLengthRequirement]);
+
+  const shouldShowDropdown = isOpen && !disabled && meetsLengthRequirement;
+
   return (
     <div ref={dropdownRef} className="relative w-full">
       <input
@@ -86,14 +99,18 @@ export default function SearchableDropdown({
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onFocus={() => setIsOpen(true)}
+        onFocus={() => {
+          if (meetsLengthRequirement) {
+            setIsOpen(true);
+          }
+        }}
         onKeyDown={handleKeyDown}
         disabled={disabled}
         placeholder={placeholder}
         className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
       />
 
-      {isOpen && !disabled && (
+      {shouldShowDropdown && (
         <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-96 overflow-y-auto">
           {filteredParts.length === 0 ? (
             <div className="px-4 py-3 text-gray-500">No parts found</div>
@@ -107,7 +124,6 @@ export default function SearchableDropdown({
                 }`}
               >
                 <div className="font-semibold">{part.name}</div>
-                <div className="text-sm text-gray-600">{part.commonName}</div>
               </button>
             ))
           )}
