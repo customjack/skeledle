@@ -213,11 +213,66 @@ export default function SVGCreator() {
     }
   };
 
+  const slugifyLabel = (label: string, fallback: string) => {
+    const base = label
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return base || fallback;
+  };
+
+  interface RegionGroup {
+    groupId: string;
+    label: string;
+    regions: Region[];
+    slug: string;
+  }
+
+  const getGroupedRegions = (): RegionGroup[] => {
+    const groupMap = regions.reduce((acc, region) => {
+      const key = region.groupId || region.id;
+      if (!acc.has(key)) {
+        acc.set(key, {
+          groupId: key,
+          label: region.label,
+          regions: [region],
+        });
+      } else {
+        acc.get(key)!.regions.push(region);
+      }
+      return acc;
+    }, new Map<string, { groupId: string; label: string; regions: Region[] }>());
+
+    const slugCounts = new Map<string, number>();
+    const getUniqueSlug = (label: string, fallback: string) => {
+      const base = slugifyLabel(label, fallback);
+      const currentCount = slugCounts.get(base) ?? 0;
+      slugCounts.set(base, currentCount + 1);
+      return currentCount === 0 ? base : `${base}-${currentCount + 1}`;
+    };
+
+    return Array.from(groupMap.values()).map(group => ({
+      ...group,
+      slug: getUniqueSlug(group.label, group.groupId),
+    }));
+  };
+
   const exportSVG = () => {
     if (!imageDimensions.width || !imageDimensions.height) {
       alert('Please upload an image first');
       return;
     }
+
+    const groups = getGroupedRegions();
+
+    const renderGroup = (group: RegionGroup) => {
+      const polygons = group.regions.map(region => {
+        const pointsStr = region.points.map(p => `${p.x},${p.y}`).join(' ');
+        return `    <polygon id="${region.id}" class="region" data-label="${region.label}" points="${pointsStr}" />`;
+      }).join('\n');
+      return `  <g id="${group.slug}" data-label="${group.label}" data-group-id="${group.groupId}">\n${polygons}\n  </g>`;
+    };
 
     const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${imageDimensions.width} ${imageDimensions.height}" width="${imageDimensions.width}" height="${imageDimensions.height}">
@@ -232,10 +287,7 @@ export default function SVGCreator() {
   <image href="${image}" width="${imageDimensions.width}" height="${imageDimensions.height}" />
 
   <!-- Regions -->
-${regions.map(region => {
-  const pointsStr = region.points.map(p => `${p.x},${p.y}`).join(' ');
-  return `  <polygon id="${region.id}" class="region" points="${pointsStr}" />`;
-}).join('\n')}
+${groups.map(renderGroup).join('\n')}
 </svg>`;
 
     const blob = new Blob([svgContent], { type: 'image/svg+xml' });
@@ -248,16 +300,14 @@ ${regions.map(region => {
   };
 
   const exportRegionList = () => {
-    // Group regions by groupId and create mapping
-    const groupedMapping = [...new Set(regions.map(r => r.groupId))].map(groupId => {
-      const groupRegions = regions.filter(r => r.groupId === groupId);
-      const label = groupRegions[0]?.label || 'Unknown';
-      const svgElementIds = groupRegions.map(r => r.id);
-
+    const groups = getGroupedRegions();
+    const groupedMapping = groups.map(group => {
+      const svgElementIds = group.regions.map(r => r.id);
       return {
-        label,
+        label: group.label,
+        svgGroupId: group.slug,
         svgElementIds: svgElementIds.length === 1 ? svgElementIds[0] : svgElementIds,
-        regionCount: groupRegions.length,
+        regionCount: group.regions.length,
       };
     });
 
