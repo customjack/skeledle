@@ -64,36 +64,125 @@ export class AnatomyDatabase {
       new AnatomicalPart('metatarsals', 'Metatarsals', 'Foot Bones', BodySystem.SKELETAL, BodyRegion.LOWER_LIMB, ['MetatarsalsLeft', 'MetatarsalsRight'], ['foot bones']),
       new AnatomicalPart('phalanges-foot', 'Phalanges (Foot)', 'Toe Bones', BodySystem.SKELETAL, BodyRegion.LOWER_LIMB, ['PhalangesFootLeft', 'PhalangesFootRight'], ['toes', 'toe bones']),
 
-      // Hand Bones - Detailed (from hand_diagram.svg)
-      // These use the hand diagram SVG file created with the SVG Creator tool
+      // Hand Bones - grouped selections from hand_diagram.svg
       new AnatomicalPart(
-        'distal-phalanx-thumb',
-        'Distal Phalanx of Thumb',
-        'Thumb Tip',
+        'hand-distal-phalanges',
+        'Distal Phalanges',
+        'Fingertips',
         BodySystem.SKELETAL,
         BodyRegion.UPPER_LIMB,
-        'region-1763261288921-0.09604359539000884',
-        ['thumb tip', 'thumb distal phalanx'],
+        'distal-phalanges',
+        ['fingertips', 'distal phalanges'],
         '/anatomical-images/hand_diagram.svg'
       ),
       new AnatomicalPart(
-        'middle-phalanx-index',
-        'Middle Phalanx of Index Finger',
-        'Index Finger Middle',
+        'hand-middle-phalanges',
+        'Middle Phalanges',
+        'Finger Middles',
         BodySystem.SKELETAL,
         BodyRegion.UPPER_LIMB,
-        'region-1763261301656-0.6552848809874658',
-        ['index middle', 'index finger middle'],
+        'middle-phalanges',
+        ['middle phalanges', 'middle finger bones'],
         '/anatomical-images/hand_diagram.svg'
       ),
       new AnatomicalPart(
-        'distal-phalanx-middle',
-        'Distal Phalanx of Middle Finger',
-        'Middle Finger Tip',
+        'hand-proximal-phalanges',
+        'Proximal Phalanges',
+        'Finger Bases',
         BodySystem.SKELETAL,
         BodyRegion.UPPER_LIMB,
-        'region-1763261314136-0.7987335429732788',
-        ['middle finger tip', 'middle finger distal'],
+        'proximal-phalanges',
+        ['proximal phalanges', 'finger bases'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-metacarpals',
+        'Metacarpals',
+        'Hand Bones',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'metacarpals',
+        ['metacarpals', 'hand bones'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-trapezium',
+        'Trapezium',
+        'Greater Multangular',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'trapezium',
+        ['greater multangular', 'trapezium bone'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-trapezoid',
+        'Trapezoid',
+        'Lesser Multangular',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'trapezoid',
+        ['lesser multangular', 'trapezoid bone'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-capitate',
+        'Capitate',
+        'Capitate Bone',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'capitate',
+        ['capitate bone'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-hamate',
+        'Hamate',
+        'Hamate Bone',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'hamate',
+        ['hamate bone', 'unciform'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-scaphoid',
+        'Scaphoid',
+        'Navicular of Hand',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'scaphoid',
+        ['navicular bone', 'scaphoid bone'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-lunate',
+        'Lunate',
+        'Lunate Bone',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'lunate',
+        ['lunate bone', 'semilunar bone'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-triquetrum',
+        'Triquetrum',
+        'Triquetral Bone',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'triquetrum',
+        ['triquetral bone', 'cuneiform bone'],
+        '/anatomical-images/hand_diagram.svg'
+      ),
+      new AnatomicalPart(
+        'hand-pisiform',
+        'Pisiform',
+        'Pisiform Bone',
+        BodySystem.SKELETAL,
+        BodyRegion.UPPER_LIMB,
+        'pisiform',
+        ['pisiform bone'],
         '/anatomical-images/hand_diagram.svg'
       ),
     ];
