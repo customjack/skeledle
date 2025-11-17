@@ -108,6 +108,42 @@ export default function DailyChallenge() {
                       <p className="text-xl mb-4">
                         You correctly identified the {gameState.targetPart.name}!
                       </p>
+                      <div className="bg-gray-50 p-4 rounded-lg mb-4 text-left max-w-md mx-auto">
+                        <div className="mb-2">
+                          <div className="text-sm text-gray-500">Medical Name</div>
+                          <div className="text-lg font-bold text-gray-900">
+                            {gameState.targetPart.name}
+                          </div>
+                        </div>
+                        <div className="mb-2">
+                          <div className="text-sm text-gray-500">Common Name</div>
+                          <div className="text-base font-semibold text-gray-700">
+                            {gameState.targetPart.commonName}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 pt-2 border-t">
+                          <div>
+                            <div className="text-xs text-gray-500">System</div>
+                            <div className="text-sm font-medium capitalize">
+                              {gameState.targetPart.system}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-gray-500">Region</div>
+                            <div className="text-sm font-medium capitalize">
+                              {gameState.targetPart.region.replace('_', ' ')}
+                            </div>
+                          </div>
+                        </div>
+                        {gameState.targetPart.aliases.length > 0 && (
+                          <div className="pt-2 border-t mt-2">
+                            <div className="text-xs text-gray-500 mb-1">Also known as</div>
+                            <div className="text-sm text-gray-700">
+                              {gameState.targetPart.aliases.join(', ')}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </>
                   ) : (
                     <>
@@ -122,6 +158,42 @@ export default function DailyChallenge() {
                           ({gameState.targetPart.commonName})
                         </span>
                       </p>
+                      <div className="bg-gray-50 p-4 rounded-lg mb-4 text-left max-w-md mx-auto">
+                        <div className="mb-2">
+                          <div className="text-sm text-gray-500">Medical Name</div>
+                          <div className="text-lg font-bold text-gray-900">
+                            {gameState.targetPart.name}
+                          </div>
+                        </div>
+                        <div className="mb-2">
+                          <div className="text-sm text-gray-500">Common Name</div>
+                          <div className="text-base font-semibold text-gray-700">
+                            {gameState.targetPart.commonName}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 pt-2 border-t">
+                          <div>
+                            <div className="text-xs text-gray-500">System</div>
+                            <div className="text-sm font-medium capitalize">
+                              {gameState.targetPart.system}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-gray-500">Region</div>
+                            <div className="text-sm font-medium capitalize">
+                              {gameState.targetPart.region.replace('_', ' ')}
+                            </div>
+                          </div>
+                        </div>
+                        {gameState.targetPart.aliases.length > 0 && (
+                          <div className="pt-2 border-t mt-2">
+                            <div className="text-xs text-gray-500 mb-1">Also known as</div>
+                            <div className="text-sm text-gray-700">
+                              {gameState.targetPart.aliases.join(', ')}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </>
                   )}
 

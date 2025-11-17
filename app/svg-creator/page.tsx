@@ -49,14 +49,124 @@ export default function SVGCreator() {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        setImageDimensions({ width: img.width, height: img.height });
-        setImage(event.target?.result as string);
-      };
-      img.src = event.target?.result as string;
+      const result = event.target?.result as string;
+
+      // Check if it's an SVG file
+      if (file.type === 'image/svg+xml' || file.name.endsWith('.svg')) {
+        // Parse SVG to extract existing regions
+        parseSVGRegions(result);
+      } else {
+        // Regular image file
+        const img = new Image();
+        img.onload = () => {
+          setImageDimensions({ width: img.width, height: img.height });
+          setImage(result);
+        };
+        img.src = result;
+      }
     };
     reader.readAsDataURL(file);
+  };
+
+  const parseSVGRegions = (svgDataUrl: string) => {
+    // Parse the SVG to extract regions
+    const parser = new DOMParser();
+    const base64Data = svgDataUrl.split(',')[1];
+    const svgText = atob(base64Data);
+    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+
+    // Get viewBox or width/height for dimensions
+    const svgElement = svgDoc.documentElement;
+    const viewBox = svgElement.getAttribute('viewBox');
+    let width = 800;
+    let height = 600;
+
+    if (viewBox) {
+      const parts = viewBox.split(/\s+/);
+      width = parseFloat(parts[2]);
+      height = parseFloat(parts[3]);
+    } else {
+      width = parseFloat(svgElement.getAttribute('width') || '800');
+      height = parseFloat(svgElement.getAttribute('height') || '600');
+    }
+
+    setImageDimensions({ width, height });
+
+    // Extract embedded image
+    const imageElement = svgDoc.querySelector('image');
+    if (imageElement) {
+      const href = imageElement.getAttribute('href') || imageElement.getAttribute('xlink:href');
+      if (href) {
+        setImage(href);
+      }
+    }
+
+    // Extract regions from groups and polygons
+    const extractedRegions: Region[] = [];
+    const groupColorMap = new Map<string, string>(); // Map to store color per group
+    const groups = svgDoc.querySelectorAll('g[data-label], g[id]');
+
+    groups.forEach((group) => {
+      const groupId = group.getAttribute('data-group-id') || group.id || `group-${Date.now()}-${Math.random()}`;
+      const label = group.getAttribute('data-label') || group.id || 'Unknown';
+      const polygons = group.querySelectorAll('polygon');
+
+      // Assign one color per group
+      if (!groupColorMap.has(groupId)) {
+        groupColorMap.set(groupId, getRandomColor());
+      }
+      const groupColor = groupColorMap.get(groupId)!;
+
+      polygons.forEach((polygon) => {
+        const pointsStr = polygon.getAttribute('points');
+        const regionId = polygon.id || `region-${Date.now()}-${Math.random()}`;
+
+        if (pointsStr) {
+          const points = pointsStr.trim().split(/\s+/).map(pointPair => {
+            const [x, y] = pointPair.split(',').map(Number);
+            return { x, y };
+          });
+
+          extractedRegions.push({
+            id: regionId,
+            label,
+            points,
+            color: groupColor, // Use the same color for all regions in this group
+            groupId,
+          });
+        }
+      });
+    });
+
+    // Also check for standalone polygons not in groups
+    const standalonePolygons = svgDoc.querySelectorAll('svg > polygon[class="region"], svg > polygon[id]');
+    standalonePolygons.forEach((polygon) => {
+      const pointsStr = polygon.getAttribute('points');
+      const regionId = polygon.id || `region-${Date.now()}-${Math.random()}`;
+      const label = polygon.getAttribute('data-label') || regionId;
+
+      if (pointsStr) {
+        const points = pointsStr.trim().split(/\s+/).map(pointPair => {
+          const [x, y] = pointPair.split(',').map(Number);
+          return { x, y };
+        });
+
+        extractedRegions.push({
+          id: regionId,
+          label,
+          points,
+          color: getRandomColor(),
+          groupId: regionId, // Each standalone polygon is its own group
+        });
+      }
+    });
+
+    if (extractedRegions.length > 0) {
+      setRegions(extractedRegions);
+      alert(`Loaded ${extractedRegions.length} regions from SVG! You can now edit the labels and export.`);
+    } else {
+      alert('No regions found in SVG. You can start drawing new ones.');
+    }
   };
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -149,7 +259,7 @@ export default function SVGCreator() {
       label,
       points: currentRegion,
       color,
-      groupId,
+      groupId: groupId || undefined,
     };
 
     setRegions([...regions, newRegion]);

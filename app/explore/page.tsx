@@ -209,11 +209,11 @@ export default function ExplorePage() {
           targetElement.setAttribute('data-explored', 'true');
 
           // More visible highlighting with glow effect
-          (targetElement as SVGElement).style.fill = fillColor;
-          (targetElement as SVGElement).style.fillOpacity = '0.8';
-          (targetElement as SVGElement).style.stroke = strokeColor;
-          (targetElement as SVGElement).style.strokeWidth = '4';
-          (targetElement as SVGElement).style.filter = `drop-shadow(0 0 8px ${strokeColor})`;
+          (targetElement as unknown as SVGElement).style.fill = fillColor;
+          (targetElement as unknown as SVGElement).style.fillOpacity = '0.8';
+          (targetElement as unknown as SVGElement).style.stroke = strokeColor;
+          (targetElement as unknown as SVGElement).style.strokeWidth = '4';
+          (targetElement as unknown as SVGElement).style.filter = `drop-shadow(0 0 8px ${strokeColor})`;
 
           // Highlight all child elements too (for complex shapes)
           const children = targetElement.querySelectorAll('*');

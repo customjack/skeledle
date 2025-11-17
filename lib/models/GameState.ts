@@ -49,7 +49,7 @@ export class GameState {
     };
 
     const newGuesses = [...this.guesses, newGuess];
-    let newStatus = this.status;
+    let newStatus: GameStatus = this.status;
 
     // Check if won
     if (hint.sameName) {

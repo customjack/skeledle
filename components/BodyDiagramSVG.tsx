@@ -87,11 +87,11 @@ export default function BodyDiagramSVG({
         targetElement.setAttribute('data-highlighted', 'true');
 
         // More visible highlighting with glow effect
-        (targetElement as SVGElement).style.fill = '#ff6b6b';
-        (targetElement as SVGElement).style.fillOpacity = '0.8';
-        (targetElement as SVGElement).style.stroke = '#ff0000';
-        (targetElement as SVGElement).style.strokeWidth = '4';
-        (targetElement as SVGElement).style.filter = 'drop-shadow(0 0 8px #ff0000)';
+        (targetElement as unknown as SVGElement).style.fill = '#ff6b6b';
+        (targetElement as unknown as SVGElement).style.fillOpacity = '0.8';
+        (targetElement as unknown as SVGElement).style.stroke = '#ff0000';
+        (targetElement as unknown as SVGElement).style.strokeWidth = '4';
+        (targetElement as unknown as SVGElement).style.filter = 'drop-shadow(0 0 8px #ff0000)';
 
         // Highlight all child elements too (for complex shapes)
         const children = targetElement.querySelectorAll('*');

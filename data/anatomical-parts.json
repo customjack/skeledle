@@ -1,0 +1,656 @@
+[
+  {
+    "id": "skull",
+    "name": "Skull",
+    "commonName": "Head Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "Skull",
+    "aliases": ["cranium", "head bones"]
+  },
+  {
+    "id": "mandible",
+    "name": "Mandible",
+    "commonName": "Jawbone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "Mandible",
+    "aliases": ["jaw", "lower jaw", "jawbone"]
+  },
+  {
+    "id": "cranium",
+    "name": "Cranium",
+    "commonName": "Brain Case",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "Cranium",
+    "aliases": ["skull cap"]
+  },
+  {
+    "id": "cervical-vertebrae",
+    "name": "Cervical Vertebrae",
+    "commonName": "Neck Bones",
+    "system": "skeletal",
+    "region": "neck",
+    "svgPaths": "CervicalVertebrae",
+    "aliases": ["neck vertebrae", "c-spine"]
+  },
+  {
+    "id": "thoracic-vertebrae",
+    "name": "Thoracic Vertebrae",
+    "commonName": "Upper Back Bones",
+    "system": "skeletal",
+    "region": "back",
+    "svgPaths": "ThoracicVertebrae",
+    "aliases": ["upper spine", "t-spine"]
+  },
+  {
+    "id": "lumbar-vertebrae",
+    "name": "Lumbar Vertebrae",
+    "commonName": "Lower Back Bones",
+    "system": "skeletal",
+    "region": "back",
+    "svgPaths": "LumbarVertebrae",
+    "aliases": ["lower spine", "l-spine"]
+  },
+  {
+    "id": "sacrum",
+    "name": "Sacrum",
+    "commonName": "Tailbone Base",
+    "system": "skeletal",
+    "region": "pelvis",
+    "svgPaths": "Sacrum",
+    "aliases": ["sacred bone"]
+  },
+  {
+    "id": "coccyx",
+    "name": "Coccyx",
+    "commonName": "Tailbone",
+    "system": "skeletal",
+    "region": "pelvis",
+    "svgPaths": "Coccyx",
+    "aliases": ["tail bone"]
+  },
+  {
+    "id": "sternum",
+    "name": "Sternum",
+    "commonName": "Breastbone",
+    "system": "skeletal",
+    "region": "thorax",
+    "svgPaths": "Sternum",
+    "aliases": ["breastbone", "chest bone"]
+  },
+  {
+    "id": "manubrium",
+    "name": "Manubrium",
+    "commonName": "Upper Sternum",
+    "system": "skeletal",
+    "region": "thorax",
+    "svgPaths": "Manubrium",
+    "aliases": ["upper breastbone"]
+  },
+  {
+    "id": "clavicle",
+    "name": "Clavicle",
+    "commonName": "Collarbone",
+    "system": "skeletal",
+    "region": "thorax",
+    "svgPaths": ["ClavicleLeft", "ClavicleRight"],
+    "aliases": ["collarbone"]
+  },
+  {
+    "id": "scapula",
+    "name": "Scapula",
+    "commonName": "Shoulder Blade",
+    "system": "skeletal",
+    "region": "thorax",
+    "svgPaths": "Scapula",
+    "aliases": ["shoulder blade", "scapulae"]
+  },
+  {
+    "id": "pelvis",
+    "name": "Pelvic Girdle",
+    "commonName": "Hip Bones",
+    "system": "skeletal",
+    "region": "pelvis",
+    "svgPaths": "PelvicGirdle",
+    "aliases": ["pelvis", "hip bones", "pelvic bone"]
+  },
+  {
+    "id": "humerus",
+    "name": "Humerus",
+    "commonName": "Upper Arm Bone",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": ["HumerusLeft", "HumerusRight"],
+    "aliases": ["upper arm bone"]
+  },
+  {
+    "id": "radius",
+    "name": "Radius",
+    "commonName": "Forearm Bone (Thumb Side)",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": ["RadiusLeft", "RadiusRight"],
+    "aliases": ["radius"]
+  },
+  {
+    "id": "ulna",
+    "name": "Ulna",
+    "commonName": "Forearm Bone (Pinky Side)",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": ["UlnaLeft", "UlnaRight"],
+    "aliases": ["ulna"]
+  },
+  {
+    "id": "carpals",
+    "name": "Carpals",
+    "commonName": "Wrist Bones",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": ["CarpalsLeft", "CarpalsRight"],
+    "aliases": ["wrist", "wrist bones"]
+  },
+  {
+    "id": "metacarpals",
+    "name": "Metacarpals",
+    "commonName": "Hand Bones",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": ["MetacarpalsLeft", "MetacarpalsRight"],
+    "aliases": ["hand bones"]
+  },
+  {
+    "id": "phalanges-hand",
+    "name": "Phalanges (Hand)",
+    "commonName": "Finger Bones",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": ["PhalangesLeft", "PhalangesRight"],
+    "aliases": ["fingers", "finger bones"]
+  },
+  {
+    "id": "femur",
+    "name": "Femur",
+    "commonName": "Thigh Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "FemurLeft",
+    "aliases": ["thigh bone", "femur"]
+  },
+  {
+    "id": "patella",
+    "name": "Patella",
+    "commonName": "Kneecap",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": ["PatellaLeft", "PatellaRight"],
+    "aliases": ["kneecap", "knee cap"]
+  },
+  {
+    "id": "tibia",
+    "name": "Tibia",
+    "commonName": "Shin Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": ["TibiaLeft", "TibiaRight"],
+    "aliases": ["shin bone", "shin"]
+  },
+  {
+    "id": "fibula",
+    "name": "Fibula",
+    "commonName": "Calf Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": ["FibulaLeft", "FibulaRight"],
+    "aliases": ["calf bone", "fibula"]
+  },
+  {
+    "id": "tarsals",
+    "name": "Tarsals",
+    "commonName": "Ankle Bones",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": ["TarsalsLeft", "TarsalsRight"],
+    "aliases": ["ankle", "ankle bones", "heel"]
+  },
+  {
+    "id": "metatarsals",
+    "name": "Metatarsals",
+    "commonName": "Foot Bones",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": ["MetatarsalsLeft", "MetatarsalsRight"],
+    "aliases": ["foot bones"]
+  },
+  {
+    "id": "phalanges-foot",
+    "name": "Phalanges (Foot)",
+    "commonName": "Toe Bones",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": ["PhalangesFootLeft", "PhalangesFootRight"],
+    "aliases": ["toes", "toe bones"]
+  },
+  {
+    "id": "hand-distal-phalanges",
+    "name": "Distal Phalanges (Hand)",
+    "commonName": "Fingertips",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "distal-phalanges-hand",
+    "aliases": ["fingertips", "distal phalanges"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-middle-phalanges",
+    "name": "Middle Phalanges (Hand)",
+    "commonName": "Finger Middles",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "middle-phalanges-hand",
+    "aliases": ["middle phalanges", "middle finger bones"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-proximal-phalanges",
+    "name": "Proximal Phalanges (Hand)",
+    "commonName": "Finger Bases",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "proximal-phalanges-hand",
+    "aliases": ["proximal phalanges", "finger bases"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-metacarpals",
+    "name": "Metacarpals",
+    "commonName": "Hand Bones",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "metacarpals",
+    "aliases": ["metacarpals", "hand bones"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-trapezium",
+    "name": "Trapezium",
+    "commonName": "Greater Multangular",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "trapezium",
+    "aliases": ["greater multangular", "trapezium bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-trapezoid",
+    "name": "Trapezoid",
+    "commonName": "Lesser Multangular",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "trapezoid",
+    "aliases": ["lesser multangular", "trapezoid bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-capitate",
+    "name": "Capitate",
+    "commonName": "Capitate Bone",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "capitate",
+    "aliases": ["capitate bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-hamate",
+    "name": "Hamate",
+    "commonName": "Hamate Bone",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "hamate",
+    "aliases": ["hamate bone", "unciform"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-scaphoid",
+    "name": "Scaphoid",
+    "commonName": "Navicular of Hand",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "scaphoid",
+    "aliases": ["navicular bone", "scaphoid bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-lunate",
+    "name": "Lunate",
+    "commonName": "Lunate Bone",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "lunate",
+    "aliases": ["lunate bone", "semilunar bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-triquetrum",
+    "name": "Triquetrum",
+    "commonName": "Triquetral Bone",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "triquetrum",
+    "aliases": ["triquetral bone", "cuneiform bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "hand-pisiform",
+    "name": "Pisiform",
+    "commonName": "Pisiform Bone",
+    "system": "skeletal",
+    "region": "upper_limb",
+    "svgPaths": "pisiform",
+    "aliases": ["pisiform bone"],
+    "diagramPath": "/anatomical-images/hand_diagram.svg"
+  },
+  {
+    "id": "foot-distal-phalange",
+    "name": "Distal Phalange (Foot)",
+    "commonName": "Toe Tips",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "distal-phalange-foot",
+    "aliases": ["toe tips", "distal phalanges foot"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "foot-middle-phalange",
+    "name": "Middle Phalange (Foot)",
+    "commonName": "Middle Toe Bones",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "middle-phalange-foot",
+    "aliases": ["middle phalanges foot", "middle toe bones"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "foot-proximal-phalange",
+    "name": "Proximal Phalange (Foot)",
+    "commonName": "Toe Bases",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "proximal-phalange-foot",
+    "aliases": ["proximal phalanges foot", "toe bases"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "foot-metatarsals",
+    "name": "Metatarsals",
+    "commonName": "Foot Bones",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "metatarsals",
+    "aliases": ["foot bones", "metatarsal bones"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "medial-cuneiform",
+    "name": "Medial Cuneiform",
+    "commonName": "Inner Cuneiform",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "medial-cuneiform",
+    "aliases": ["inner cuneiform", "first cuneiform"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "intermediate-cuneiform",
+    "name": "Intermediate Cuneiform",
+    "commonName": "Middle Cuneiform",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "intermediate-cuneiform",
+    "aliases": ["middle cuneiform", "second cuneiform"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "lateral-cuneiform",
+    "name": "Lateral Cuneiform",
+    "commonName": "Outer Cuneiform",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "lateral-cuneiform",
+    "aliases": ["outer cuneiform", "third cuneiform"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "cuboid",
+    "name": "Cuboid",
+    "commonName": "Cuboid Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "cuboid",
+    "aliases": ["cuboid bone"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "navicular",
+    "name": "Navicular",
+    "commonName": "Navicular Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "navicular",
+    "aliases": ["navicular bone", "scaphoid foot"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "calcaneus",
+    "name": "Calcaneus",
+    "commonName": "Heel Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "calcaneus",
+    "aliases": ["heel bone", "heel"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "trochlea-of-talus",
+    "name": "Trochlea of Talus",
+    "commonName": "Talus Upper Surface",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "trochlea-of-talus",
+    "aliases": ["talus trochlea"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "talus",
+    "name": "Talus",
+    "commonName": "Ankle Bone",
+    "system": "skeletal",
+    "region": "lower_limb",
+    "svgPaths": "talus",
+    "aliases": ["ankle bone", "astragalus"],
+    "diagramPath": "/anatomical-images/foot_diagram.svg"
+  },
+  {
+    "id": "coronal-suture",
+    "name": "Coronal Suture",
+    "commonName": "Frontal-Parietal Joint",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "coronal-suture",
+    "aliases": ["frontal parietal suture"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "orbit",
+    "name": "Orbit",
+    "commonName": "Eye Socket",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "orbit",
+    "aliases": ["eye socket", "orbital cavity"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "glabella",
+    "name": "Glabella",
+    "commonName": "Space Between Eyebrows",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "glabella",
+    "aliases": ["brow ridge"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "perpendicular-plate-ethmoid",
+    "name": "Perpendicular Plate of Ethmoid Bone",
+    "commonName": "Nasal Septum Upper Part",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "perpendicular-plate-of-ethmoid-bone",
+    "aliases": ["ethmoid perpendicular plate", "nasal septum bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "vomer-bone",
+    "name": "Vomer Bone",
+    "commonName": "Nasal Septum Lower Part",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "vomer-bone",
+    "aliases": ["vomer"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "middle-nasal-concha",
+    "name": "Middle Nasal Concha",
+    "commonName": "Middle Turbinate",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "middle-nasal-concha",
+    "aliases": ["middle turbinate", "middle nasal turbinate"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "inferior-nasal-concha",
+    "name": "Inferior Nasal Concha",
+    "commonName": "Lower Turbinate",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "inferior-nasal-concha",
+    "aliases": ["inferior turbinate", "lower nasal turbinate"],
+    "diagramPath": "/anatomical-images/skull_diagram_anterior.svg"
+  },
+  {
+    "id": "frontal-bone",
+    "name": "Frontal",
+    "commonName": "Forehead Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "frontal",
+    "aliases": ["frontal bone", "forehead"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "parietal-bone",
+    "name": "Parietal",
+    "commonName": "Side Skull Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "parietal",
+    "aliases": ["parietal bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "occipital-bone",
+    "name": "Occipital",
+    "commonName": "Back Skull Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "occipital",
+    "aliases": ["occipital bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "temporal-bone",
+    "name": "Temporal",
+    "commonName": "Temple Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "temporal",
+    "aliases": ["temporal bone", "temple"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "sphenoid-bone",
+    "name": "Sphenoid",
+    "commonName": "Bat Wing Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "sphenoid",
+    "aliases": ["sphenoid bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "zygomatic-bone",
+    "name": "Zygomatic",
+    "commonName": "Cheekbone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "zygomatic",
+    "aliases": ["zygomatic bone", "cheekbone", "malar bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "mandible-lateral",
+    "name": "Mandible",
+    "commonName": "Lower Jaw",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "mandible",
+    "aliases": ["jaw", "lower jaw", "jawbone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "maxilla-bone",
+    "name": "Maxilla",
+    "commonName": "Upper Jaw",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "maxilla",
+    "aliases": ["maxilla bone", "upper jaw"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "lacrimal-bone",
+    "name": "Lacrimal",
+    "commonName": "Tear Duct Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "lacrimal",
+    "aliases": ["lacrimal bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "ethmoid-bone",
+    "name": "Ethmoid",
+    "commonName": "Sinus Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "ethmoid",
+    "aliases": ["ethmoid bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  },
+  {
+    "id": "nasal-bone",
+    "name": "Nasal",
+    "commonName": "Nose Bridge Bone",
+    "system": "skeletal",
+    "region": "head",
+    "svgPaths": "nasal",
+    "aliases": ["nasal bone", "nose bone"],
+    "diagramPath": "/anatomical-images/skull_diagram_lateral.svg"
+  }
+]
